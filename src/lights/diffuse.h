@@ -52,7 +52,10 @@ namespace pbrt {
 
 // DiffuseAreaLight Declarations
 class DiffuseAreaLight: public AreaLight {
-public:
+    friend class AreaIntegrator;
+    friend class AreaBMCIntegrator;
+
+  public:
 	// DiffuseAreaLight Public Methods
 	DiffuseAreaLight(const Transform &LightToWorld,
 			const MediumInterface &mediumInterface, const Spectrum &Le,

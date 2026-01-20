@@ -18,16 +18,15 @@
 #include <list>
 
 using pbrt::Float;
-using pbrt::Infinity;
 using pbrt::Error;
-using pbrt::EPSILON;
 
 namespace linesampling {
 
 class Interval {
 public:
-	Interval() :
-			min(Infinity), max(-Infinity) {
+    Interval()
+        : min(std::numeric_limits<Float>::infinity()),
+          max(-std::numeric_limits<Float>::infinity()) {
 	}
 
 	Interval(Float value) :
@@ -66,7 +65,7 @@ public:
 	}
 
 	inline bool empty() const {
-		return max - min <= EPSILON;
+		return max - min <= 1e-12;
 	}
 
 	inline void Print() {

@@ -692,7 +692,7 @@ Interaction Quad::SampleSolidAngle(const Point3f& p, const Point2f &sample, Floa
 	Float b0 = n0.z;
 	Float b1 = n2.z;
 	Float b0sq = b0 * b0;
-	Float k = 2 * M_PI - g2 - g3;
+	Float k = 2 * Pi - g2 - g3;
 
 	// Solid angle of sph squad (pdf uniform over SA)
 	Float SA = g0 + g1 - k;
@@ -776,7 +776,7 @@ Float Quad::PdfSolidAngle(const Point3f& p) const {
 	Float b0 = n0.z;
 	Float b1 = n2.z;
 	Float b0sq = b0 * b0;
-	Float k = 2 * M_PI - g2 - g3;
+	Float k = 2 * Pi - g2 - g3;
 
 	// Solid angle of sph squad (pdf uniform over SA)
 	Float SA = g0 + g1 - k;
@@ -848,7 +848,7 @@ LineInteraction Quad::SampleSQLine(const Point3f& p, const Float u, int strategy
 	Float b0 = n0.z;
 	Float b1 = n2.z;
 	Float b0sq = b0 * b0;
-	Float k = 2 * M_PI - g2 - g3;
+	Float k = 2 * Pi - g2 - g3;
 
 	// Solid angle of sph squad (pdf uniform over SA)
 	Float SA = g0 + g1 - k;
@@ -1067,7 +1067,7 @@ Float Quad::PdfSQLine(const Interaction &ref, const Vector3f& wi, Point3f& pLigh
 	Float b0 = n0.z;
 	Float b1 = n2.z;
 	Float b0sq = b0 * b0;
-	Float k = 2 * M_PI - g2 - g3;
+	Float k = 2 * Pi - g2 - g3;
 
 	// Solid angle of sph squad (pdf uniform over SA)
 	Float SA = g0 + g1 - k;

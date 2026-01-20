@@ -1,0 +1,3 @@
+[submodule "src/ext/GPRender"]
+	path = src/ext/GPRender
+	url = https://github.com/upf-gti/GPRender.git

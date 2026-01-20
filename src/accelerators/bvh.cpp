@@ -378,7 +378,7 @@ BVHBuildNode *BVHAccel::recursiveBuild(MemoryArena &arena,
 					// Allocate _BucketInfo_ for SAH partition buckets
 					const int nBuckets = std::max(24,
 							std::min(128, 4 * nPrimitives));
-					BucketInfo buckets[nBuckets];
+					std::vector<BucketInfo> buckets(nBuckets);
 
 					// Initialize _BucketInfo_ for SAH partition buckets
 					for (int i = start; i < end; ++i) {
@@ -395,7 +395,7 @@ BVHBuildNode *BVHAccel::recursiveBuild(MemoryArena &arena,
 					}
 
 					// Compute costs for splitting after each bucket
-					Float cost[nBuckets - 1];
+					std::vector<Float> cost(nBuckets - 1);
 					for (int i = 0; i < nBuckets - 1; ++i) {
 						Bounds3f b0, b1;
 						int count0 = 0, count1 = 0;

@@ -171,7 +171,7 @@ bool IntervalCollection::overlaps(const Interval &interval) const {
 	}
 
 	IntervalConstIterator start = std::upper_bound(begin(), end(),
-			interval.min - (interval.max - interval.min) - EPSILON,
+            interval.min - (interval.max - interval.min) - 1e-12,
 			IntervalComparator());
 	if (start != begin())
 		--start;
@@ -203,7 +203,7 @@ bool IntervalCollection::overlaps(const Interval &interval,
 	}
 
 	IntervalConstIterator start = std::upper_bound(begin(), end(),
-			interval.min - (interval.max - interval.min) - EPSILON,
+            interval.min - (interval.max - interval.min) - 1e-12,
 			IntervalComparator());
 	if (start != begin())
 		--start;
@@ -227,7 +227,7 @@ bool IntervalCollection::completeOverlap(const Interval &interval) const {
 		return false;
 
 	IntervalConstIterator start = std::upper_bound(begin(), end(),
-			interval.min - (interval.max - interval.min) - EPSILON,
+            interval.min - (interval.max - interval.min) - 1e-12,
 			IntervalComparator());
 	if (start != begin())
 		--start;
@@ -280,7 +280,7 @@ bool IntervalCollection::subtract(const Interval& interval) {
 			start = intervals.erase(start);
 		} else if (interval.min <= start->min) {
 			// the interval starts on the left
-			if (std::abs(start->max - interval.max) <= EPSILON) {
+			if (std::abs(start->max - interval.max) <= 1e-12) {
 				start = intervals.erase(start);
 			} else {
 				*start = Interval(interval.max, start->max);
@@ -288,7 +288,7 @@ bool IntervalCollection::subtract(const Interval& interval) {
 			}
 		} else if (interval.max >= start->max) {
 			// the interval starts on the right
-			if (std::abs(interval.min - start->min) <= EPSILON) {
+			if (std::abs(interval.min - start->min) <= 1e-12) {
 				start = intervals.erase(start);
 			} else {
 				*start = Interval(start->min, interval.min);
@@ -301,12 +301,12 @@ bool IntervalCollection::subtract(const Interval& interval) {
 			Float i0l = std::abs(interval.min - start->min);
 			Float i1l = std::abs(start->max - interval.max);
 
-			if (i0l <= EPSILON && i1l <= EPSILON) {
+			if (i0l <= 1e-12 && i1l <= 1e-12) {
 				start = intervals.erase(start);
-			} else if (i0l <= EPSILON) {
+			} else if (i0l <= 1e-12) {
 				*start = i1;
 				++start;
-			} else if (i1l <= EPSILON) {
+			} else if (i1l <= 1e-12) {
 				*start = i0;
 				++start;
 			} else {

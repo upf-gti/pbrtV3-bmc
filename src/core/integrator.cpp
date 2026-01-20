@@ -445,7 +445,7 @@ void SamplerIntegrator::Render(const Scene &scene) {
 	 * The code below solves this by using ensuring that tiles have widely
 	 * varying seeds.
 	 *************************************************************************/
-	uint32_t seeds[nbOfTiles];
+    std::vector<uint32_t> seeds(nbOfTiles);
 	for (int i = 0; i < nbOfTiles; ++i)
 		seeds[i] = sampler->UniformUInt32();
 

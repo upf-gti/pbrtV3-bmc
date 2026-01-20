@@ -138,6 +138,12 @@ ELSE()
   SET(OPENEXR_LIBS IlmImf Imath Half)
 ENDIF()
 
+###########################################################################
+# GPRender
+add_subdirectory(src/ext/gprender)
+
+###########################################################################
+
 SET(WITH_GFLAGS OFF CACHE BOOL "Use gflags")
 SET(BUILD_SHARED_LIBS OFF CACHE BOOL " " FORCE)
 ADD_SUBDIRECTORY(src/ext/glog)
@@ -272,6 +278,8 @@ ADD_EXECUTABLE ( pbrt_exe
   src/main/pbrt.cpp
   )
 ADD_SANITIZERS ( pbrt_exe )
+
+target_link_libraries(pbrt PUBLIC GPRender)
 
 SET_TARGET_PROPERTIES ( pbrt_exe
   PROPERTIES

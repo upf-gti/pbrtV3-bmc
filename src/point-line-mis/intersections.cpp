@@ -26,7 +26,7 @@ Float ShortestLineParameter(const Point3f &origin, const Vector3f &direction,
 	const Float e = Dot(xy, w);
 
 	const Float D = a * c - b * b;
-	if (D < EPSILON)
+	if (D < 1e-12)
 		return 0;
 	else
 		return (b * e - c * d) / D;
@@ -50,7 +50,7 @@ bool IntersectPlaneLine(const Normal3f &n, Float d, const Point3f &origin,
 	Float denominator = Dot(n, direction);
 
 	// line is parallel with the plane.
-	if (std::abs(denominator) < EPSILON)
+	if (std::abs(denominator) < 1e-12)
 		return false;
 
 	Float t = numerator / denominator;
@@ -134,7 +134,7 @@ bool IntersectTriangleTriangle(const Point3f& u0, const Point3f& u1,
 	Float min = std::max(minu, minv);
 	Float max = std::min(maxu, maxv);
 
-	if (std::abs(max - min) < EPSILON)
+	if (std::abs(max - min) < 1e-12)
 		return false;
 
 	isect.p1 = O + D * min;

@@ -71,6 +71,11 @@ Spectrum AreaBMCIntegrator::Li(const RayDifferential &ray, const Scene &scene,
         return Spectrum(0.0);
     }
     Spectrum L(0.0), f(0.0);
+    std::shared_ptr<Light> light = scene.lights[0];
+
+    if (!light->CanIlluminate(isect)) {
+        return Spectrum(0.0);
+    }
 
     // Initialize common variables for Direct integrator
     Vector3f wo = isect.wo;
@@ -78,8 +83,7 @@ Spectrum AreaBMCIntegrator::Li(const RayDifferential &ray, const Scene &scene,
 
     isect.ComputeScatteringFunctions(ray, arena);
     if (Le.MaxComponentValue() > 0.0) return Le;
-
-    std::shared_ptr<Light> light = scene.lights[0];
+        
     Vector3f wi;
     Float pdf;
     VisibilityTester visibility;
@@ -107,7 +111,7 @@ Spectrum AreaBMCIntegrator::Li(const RayDifferential &ray, const Scene &scene,
             radianceSamples.push_back(Le * f * geo);
         } else {
             radianceSamples.push_back(Spectrum(0.0));
-        }        
+        }
     }
     bmc->compute_integral(radianceSamples, L);   
 

@@ -62,6 +62,9 @@
 #include "integrators/unipath.h"
 #include "integrators/volpath.h"
 #include "integrators/whitted.h"
+#include "integrators/area.h"
+#include "integrators/area_bmc.h"
+#include "integrators/area_line.h"
 #include "lights/diffuse.h"
 #include "lights/distant.h"
 #include "lights/goniometric.h"
@@ -1831,13 +1834,25 @@ Integrator *RenderOptions::MakeIntegrator() const {
 		integrator = CreateMLTIntegrator(IntegratorParams, camera);
 	} else if (IntegratorName == "ambientocclusion") {
 		integrator = CreateAOIntegrator(IntegratorParams, sampler, camera);
-	
+
+    // Area CMC implementation
+    } else if (IntegratorName == "area") {
+        integrator = CreateAreaIntegrator(IntegratorParams, sampler, camera);
+
+    // Area CMC implementation
+    } else if (IntegratorName == "areabmc") {
+        integrator = CreateAreaBMCIntegrator(IntegratorParams, sampler, camera);
+
+	// Area CMC implementation
+    } else if (IntegratorName == "arealine") {
+        integrator = CreateAreaLineIntegrator(IntegratorParams, sampler, camera);
+		
 	// [Billen and Dutré '16] implementation
-	} else if (IntegratorName == "line" || IntegratorName == "directlinelighting") {
+	} else if (IntegratorName == "line") {
 		integrator = CreateDirectLineLightingIntegrator(IntegratorParams, sampler, camera);
 	
 	// [Salesin and Jarosz '19] implementation
-	} else if (IntegratorName == "pointline" || IntegratorName == "directpointlinelighting") {
+	} else if (IntegratorName == "pointline") {
 		integrator = CreatePointLineDirectIntegrator(IntegratorParams, sampler, camera);
 		
 	} else if (IntegratorName == "sppm") {

@@ -69,6 +69,12 @@ Spectrum AreaIntegrator::Li(const RayDifferential &ray, const Scene &scene,
     if (!scene.Intersect(ray, &isect)) {
         return Spectrum(0.0);
     }
+    Spectrum L(0.0);
+    std::shared_ptr<Light> light = scene.lights[0];
+
+    if (!light->CanIlluminate(isect)) {
+        return Spectrum(0.0);
+    }
     
     // Initialize common variables for Direct integrator
     Vector3f wo = isect.wo;
@@ -78,9 +84,6 @@ Spectrum AreaIntegrator::Li(const RayDifferential &ray, const Scene &scene,
     if (Le.MaxComponentValue() > 0.0) return Le;
 
     // Initialize common variables for Area integrator
-    Spectrum L(0.0);
-    
-    std::shared_ptr<Light> light = scene.lights[0];
     auto *area_light = dynamic_cast<const DiffuseAreaLight *>(light.get());
     
     Vector3f wi;

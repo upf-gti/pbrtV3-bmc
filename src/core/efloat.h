@@ -133,8 +133,8 @@ class EFloat {
         if (ef.low < 0 && ef.high > 0) {
             // Bah. The interval we're dividing by straddles zero, so just
             // return an interval of everything.
-            r.low = -Infinity;
-            r.high = Infinity;
+            r.low = -Infinity_2;
+            r.high = Infinity_2;
         } else {
             Float div[4] = {
                 LowerBound() / ef.LowerBound(), UpperBound() / ef.LowerBound(),

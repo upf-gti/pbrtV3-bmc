@@ -329,7 +329,7 @@ Film *CreateFilm(const ParamSet &params, std::unique_ptr<Filter> filter) {
 	Float scale = params.FindOneFloat("scale", 1.);
 	Float diagonal = params.FindOneFloat("diagonal", 35.);
 	Float maxSampleLuminance = params.FindOneFloat("maxsampleluminance",
-			Infinity);
+			Infinity_2);
 
 	std::string actionName = params.FindOneString("negativeaction", "warn");
 	NegativeAction action;

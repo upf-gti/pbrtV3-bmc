@@ -209,7 +209,7 @@ TEST(MaxMinDist, MinDist) {
 			return d.Length();
 		};
 
-		Float minDist = Infinity;
+		Float minDist = Infinity_2;
 		for (size_t i = 0; i < s.size(); ++i) {
 			for (size_t j = 0; j < s.size(); ++j) {
 				if (i == j)

@@ -155,7 +155,7 @@ Spectrum InfiniteAreaLight::Sample_Le(const Point2f &u1, const Point2f &u2,
 	CoordinateSystem(-d, &v1, &v2);
 	Point2f cd = ConcentricSampleDisk(u2);
 	Point3f pDisk = worldCenter + worldRadius * (cd.x * v1 + cd.y * v2);
-	*ray = Ray(pDisk + worldRadius * -d, d, Infinity, time);
+	*ray = Ray(pDisk + worldRadius * -d, d, Infinity_2, time);
 
 	// Compute _InfiniteAreaLight_ ray PDFs
 	*pdfDir = sinTheta == 0 ? 0 : mapPdf / (2 * Pi * Pi * sinTheta);

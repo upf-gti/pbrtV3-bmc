@@ -68,7 +68,7 @@ struct Interaction {
 	}
 	Ray SpawnRay(const Vector3f &d) const {
 		Point3f o = OffsetRayOrigin(p, pError, n, d);
-		return Ray(o, d, Infinity, time, GetMedium(d));
+		return Ray(o, d, Infinity_2, time, GetMedium(d));
 	}
 	Ray SpawnRayTo(const Point3f &p2) const {
 		Point3f origin = OffsetRayOrigin(p, pError, n, p2 - p);
@@ -165,7 +165,7 @@ public:
 	BSSRDF *bssrdf = nullptr;
 	mutable Vector3f dpdx, dpdy;
 	mutable Float dudx = 0, dvdx = 0, dudy = 0, dvdy = 0;
-	Float t = Infinity;
+	Float t = Infinity_2;
 };
 
 }  // namespace pbrt

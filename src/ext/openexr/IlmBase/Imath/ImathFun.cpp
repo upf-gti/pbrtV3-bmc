@@ -46,7 +46,8 @@ succf (float f)
 
     if ((u.i & 0x7f800000) == 0x7f800000)
     {
-        // Nan or infinity; don't change value.
+        // Nan or 
+        // ; don't change value.
     }
     else if (u.i == 0x00000000 || u.i == 0x80000000)
     {
@@ -58,7 +59,7 @@ succf (float f)
     {
         // Positive float, normalized or denormalized.
         // Incrementing the largest positive float
-        // produces +infinity.
+        // produces +Infinity_2.
 
         ++u.i;
     }
@@ -81,7 +82,7 @@ predf (float f)
 
     if ((u.i & 0x7f800000) == 0x7f800000)
     {
-        // Nan or infinity; don't change value.
+        // Nan or Infinity_2; don't change value.
     }
     else if (u.i == 0x00000000 || u.i == 0x80000000)
     {
@@ -99,7 +100,7 @@ predf (float f)
     {
         // Negative normalized or denormalized float.
         // Decrementing the largest negative float
-        // produces -infinity.
+        // produces -Infinity_2.
 
         ++u.i;
     }
@@ -116,7 +117,7 @@ succd (double d)
 
     if ((u.i & 0x7ff0000000000000LL) == 0x7ff0000000000000LL)
     {
-        // Nan or infinity; don't change value.
+        // Nan or Infinity_2; don't change value.
     }
     else if (u.i == 0x0000000000000000LL || u.i == 0x8000000000000000LL)
     {
@@ -128,7 +129,7 @@ succd (double d)
     {
         // Positive double, normalized or denormalized.
         // Incrementing the largest positive double
-        // produces +infinity.
+        // produces +Infinity_2.
 
         ++u.i;
     }
@@ -151,7 +152,7 @@ predd (double d)
 
     if ((u.i & 0x7ff0000000000000LL) == 0x7ff0000000000000LL)
     {
-        // Nan or infinity; don't change value.
+        // Nan or Infinity_2; don't change value.
     }
     else if (u.i == 0x0000000000000000LL || u.i == 0x8000000000000000LL)
     {
@@ -169,7 +170,7 @@ predd (double d)
     {
         // Negative normalized or denormalized double.
         // Decrementing the largest negative double
-        // produces -infinity.
+        // produces -Infinity_2.
 
         ++u.i;
     }

@@ -30,19 +30,19 @@ TEST(FloatingPoint, NextUpDownFloat) {
     EXPECT_GT(NextFloatUp(-0.f), 0.f);
     EXPECT_LT(NextFloatDown(0.f), 0.f);
 
-    EXPECT_EQ(NextFloatUp((float)Infinity), (float)Infinity);
-    EXPECT_LT(NextFloatDown((float)Infinity), (float)Infinity);
+    EXPECT_EQ(NextFloatUp((float)Infinity_2), (float)Infinity_2);
+    EXPECT_LT(NextFloatDown((float)Infinity_2), (float)Infinity_2);
 
-    EXPECT_EQ(NextFloatDown(-(float)Infinity), -(float)Infinity);
-    EXPECT_GT(NextFloatUp(-(float)Infinity), -(float)Infinity);
+    EXPECT_EQ(NextFloatDown(-(float)Infinity_2), -(float)Infinity_2);
+    EXPECT_GT(NextFloatUp(-(float)Infinity_2), -(float)Infinity_2);
 
     RNG rng;
     for (int i = 0; i < 100000; ++i) {
         float f = GetFloat(rng);
         if (std::isinf(f)) continue;
 
-        EXPECT_EQ(std::nextafter(f, (float)Infinity), NextFloatUp(f));
-        EXPECT_EQ(std::nextafter(f, -(float)Infinity), NextFloatDown(f));
+        EXPECT_EQ(std::nextafter(f, (float)Infinity_2), NextFloatUp(f));
+        EXPECT_EQ(std::nextafter(f, -(float)Infinity_2), NextFloatDown(f));
     }
 }
 
@@ -50,19 +50,19 @@ TEST(FloatingPoint, NextUpDownDouble) {
     EXPECT_GT(NextFloatUp(-0.), 0.);
     EXPECT_LT(NextFloatDown(0.), 0.);
 
-    EXPECT_EQ(NextFloatUp((double)Infinity), (double)Infinity);
-    EXPECT_LT(NextFloatDown((double)Infinity), (double)Infinity);
+    EXPECT_EQ(NextFloatUp((double)Infinity_2), (double)Infinity_2);
+    EXPECT_LT(NextFloatDown((double)Infinity_2), (double)Infinity_2);
 
-    EXPECT_EQ(NextFloatDown(-(double)Infinity), -(double)Infinity);
-    EXPECT_GT(NextFloatUp(-(double)Infinity), -(double)Infinity);
+    EXPECT_EQ(NextFloatDown(-(double)Infinity_2), -(double)Infinity_2);
+    EXPECT_GT(NextFloatUp(-(double)Infinity_2), -(double)Infinity_2);
 
     RNG rng(3);
     for (int i = 0; i < 100000; ++i) {
         double d = GetDouble(rng);
         if (std::isinf(d)) continue;
 
-        EXPECT_EQ(std::nextafter(d, (double)Infinity), NextFloatUp(d));
-        EXPECT_EQ(std::nextafter(d, -(double)Infinity), NextFloatDown(d));
+        EXPECT_EQ(std::nextafter(d, (double)Infinity_2), NextFloatUp(d));
+        EXPECT_EQ(std::nextafter(d, -(double)Infinity_2), NextFloatDown(d));
     }
 }
 

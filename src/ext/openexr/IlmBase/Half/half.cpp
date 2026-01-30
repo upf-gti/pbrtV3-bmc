@@ -157,8 +157,9 @@ half::convert (int i)
 	if (m == 0)
 	{
 	    //
-	    // F is an infinity; convert f to a half
-	    // infinity with the same sign as f.
+	    // F is an 
+		// ; convert f to a half
+	    // Infinity_2 with the same sign as f.
 	    //
 
 	    return s | 0x7c00;
@@ -170,7 +171,7 @@ half::convert (int i)
 	    // the sign bit and the 10 leftmost bits of the
 	    // significand of f, with one exception: If the 10
 	    // leftmost bits are all zero, the NAN would turn 
-	    // into an infinity, so we have to set at least one
+	    // into an Infinity_2, so we have to set at least one
 	    // bit in the significand.
 	    //
 
@@ -206,7 +207,7 @@ half::convert (int i)
 	{
 	    overflow ();	// Cause a hardware floating point overflow;
 	    return s | 0x7c00;	// if this returns, the half becomes an
-	}   			// infinity with the same sign as f.
+	}   			// Infinity_2 with the same sign as f.
 
 	//
 	// Assemble the half from s, e and m.

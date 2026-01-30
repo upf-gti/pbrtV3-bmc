@@ -513,13 +513,13 @@ Float RealisticCamera::FocusDistance(Float filmDistance) {
             "Focus ray at lens pos(%f,0) didn't make it through the lenses "
             "with film distance %f?!??\n",
             lu, filmDistance);
-        return Infinity;
+        return Infinity_2;
     }
 
     // Compute distance _zFocus_ where ray intersects the principal axis
     Float tFocus = -ray.o.x / ray.d.x;
     Float zFocus = ray(tFocus).z;
-    if (zFocus < 0) zFocus = Infinity;
+    if (zFocus < 0) zFocus = Infinity_2;
     return zFocus;
 }
 
@@ -682,7 +682,7 @@ Float RealisticCamera::GenerateRay(const CameraSample &sample, Ray *ray) const {
     Float exitPupilBoundsArea;
     Point3f pRear = SampleExitPupil(Point2f(pFilm.x, pFilm.y), sample.pLens,
                                     &exitPupilBoundsArea);
-    Ray rFilm(pFilm, pRear - pFilm, Infinity,
+    Ray rFilm(pFilm, pRear - pFilm, Infinity_2,
               Lerp(sample.time, shutterOpen, shutterClose));
     if (!TraceLensesFromFilm(rFilm, ray)) {
         ++vignettedRays;

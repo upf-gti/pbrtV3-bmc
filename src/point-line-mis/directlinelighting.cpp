@@ -377,7 +377,7 @@ DirectLineLightingIntegrator *CreateDirectLineLightingIntegrator(
 
 	// std::cout << "line strategy: " << lineStrategyString << "\n";
 
-	Float fixedDirection = Infinity;
+	Float fixedDirection = Infinity_2;
 
 	if (lineStrategyString == "uniform") {
 		strategy = DirectLineLightingIntegrator::LineSampleStrategy::UNIFORM;

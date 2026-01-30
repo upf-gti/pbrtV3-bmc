@@ -43,14 +43,15 @@ convert options:
     --bloomiters <n>   Number of filtering iterations used to generate the bloom
                        image. Default: 5
     --bloomlevel <n>   Minimum RGB value for a pixel for it to contribute to bloom.
-                       Default: Infinity (i.e., no bloom is applied)
+                       Default: 
+ (i.e., no bloom is applied)
     --bloomscale <s>   Amount by which the bloom image is scaled before being
                        added to the original image. Default: 0.3
     --bloomswidth <w>  Width of Gaussian used to generate bloom images.
                        Default: 15
     --despike <v>      For any pixels with a luminance value greater than <v>,
                        replace the pixel with the median of the 3x3 neighboring
-                       pixels. Default: infinity (i.e., disabled).
+                       pixels. Default: Infinity_2 (i.e., disabled).
     --flipy            Flip the image along the y axis
     --maxluminance <n> Luminance value mapped to white by tonemapping.
                        Default: 1
@@ -453,8 +454,8 @@ int info(int argc, char *argv[]) {
         }
 
         printf("%s: resolution %d, %d\n", argv[i], res.x, res.y);
-        Float min[3] = {Infinity, Infinity, Infinity};
-        Float max[3] = {-Infinity, -Infinity, -Infinity};
+        Float min[3] = {Infinity_2, Infinity_2, Infinity_2};
+        Float max[3] = {-Infinity_2, -Infinity_2, -Infinity_2};
         double sum[3] = {0., 0., 0.};
         double logYSum = 0.;
         int nNaN = 0, nInf = 0, nValid = 0;
@@ -587,13 +588,13 @@ int convert(int argc, char *argv[]) {
     float scale = 1.f;
     int repeat = 1;
     bool flipy = false;
-    Float bloomLevel = Infinity;
+    Float bloomLevel = Infinity_2;
     int bloomWidth = 15;
     Float bloomScale = .3;
     int bloomIters = 5;
     bool tonemap = false;
     Float maxY = 1.;
-    Float despikeLimit = Infinity;
+    Float despikeLimit = Infinity_2;
     bool preserveColors = false;
 
     int i;
@@ -666,7 +667,7 @@ int convert(int argc, char *argv[]) {
 
     for (int i = 0; i < res.x * res.y; ++i) image[i] *= scale;
 
-    if (despikeLimit < Infinity) {
+    if (despikeLimit < Infinity_2) {
         std::unique_ptr<RGBSpectrum[]> filteredImg(
             new RGBSpectrum[res.x * res.y]);
         int despikeCount = 0;
@@ -704,7 +705,7 @@ int convert(int argc, char *argv[]) {
         fprintf(stderr, "%s: despiked %d pixels\n", inFilename, despikeCount);
     }
 
-    if (bloomLevel < Infinity)
+    if (bloomLevel < Infinity_2)
         image = bloom(std::move(image), res, bloomLevel, bloomWidth, bloomScale,
                       bloomIters);
 

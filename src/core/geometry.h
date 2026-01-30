@@ -982,11 +982,12 @@ class Ray {
 public:
 	// Ray Public Methods
 	Ray() :
-			tMax(Infinity), time(0.f), medium(nullptr), lineDirection(0), boxIsectPTests(
+			tMax(
+			), time(0.f), medium(nullptr), lineDirection(0), boxIsectPTests(
 					0lu), triangleIsectPTests(0lu), geometricPrimitiveIsectPTests(
 					0lu) {
 	}
-	Ray(const Point3f &o, const Vector3f &d, Float tMax = Infinity, Float time =
+	Ray(const Point3f &o, const Vector3f &d, Float tMax = Infinity_2, Float time =
 			0.f, const Medium *medium = nullptr, Float lineDirection = 0,
 			uint64_t boxIsectPTests = 0lu, uint64_t triangleIsectPTests = 0lu,
 			uint64_t geometricPrimitiveIsectPTests = 0lu) :
@@ -1026,7 +1027,7 @@ public:
 	RayDifferential() {
 		hasDifferentials = false;
 	}
-	RayDifferential(const Point3f &o, const Vector3f &d, Float tMax = Infinity,
+	RayDifferential(const Point3f &o, const Vector3f &d, Float tMax = Infinity_2,
 			Float time = 0.f, const Medium *medium = nullptr,
 			uint64_t boxIsectPTests = 0lu, uint64_t triangleIsectPTests = 0lu,
 			uint64_t geometricPrimitiveIsectPTests = 0lu) :

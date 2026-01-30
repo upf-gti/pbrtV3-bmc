@@ -75,7 +75,7 @@ Spectrum DistantLight::Sample_Le(const Point2f &u1, const Point2f &u2,
 	Point3f pDisk = worldCenter + worldRadius * (cd.x * v1 + cd.y * v2);
 
 	// Set ray origin and direction for infinite light ray
-	*ray = Ray(pDisk + worldRadius * wLight, -wLight, Infinity, time);
+	*ray = Ray(pDisk + worldRadius * wLight, -wLight, Infinity_2, time);
 	*nLight = (Normal3f) ray->d;
 	*pdfPos = 1 / (Pi * worldRadius * worldRadius);
 	*pdfDir = 1;

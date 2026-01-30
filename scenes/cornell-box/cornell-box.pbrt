@@ -1,6 +1,6 @@
 # Adapted from Cornell Box scene in https://benedikt-bitterli.me/resources/
 
-Integrator "area" "integer numsamples" [ 20000 ] # Points
+Integrator "area" "integer numsamples" [ 32768 ] # Points
 #Integrator "line" "string method" [ "linecount" ] "string strategy" [ "fixeddirection" ] # Lines
 #Integrator "pointline" "integer maxdepth" [ 1 ] "string method" [ "linecount" ] "string strategy1" [ "line-surf-area" ] "float angle1" [ 0.0 ] "string strategy2" [ "line-surf-area" ] "float angle2" [ 0.5 ] # Points & lines
 

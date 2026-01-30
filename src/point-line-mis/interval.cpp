@@ -28,12 +28,12 @@ IntervalCollection::IntervalCollection(Float min, Float max) {
 
 Float IntervalCollection::minimum() const {
 	if (empty())
-		return Infinity;
+		return Infinity_2;
 	return intervals.front().min;
 }
 Float IntervalCollection::maximum() const {
 	if (empty())
-		return -Infinity;
+		return -Infinity_2;
 	return intervals.back().max;
 }
 

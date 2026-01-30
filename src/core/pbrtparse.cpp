@@ -2021,8 +2021,9 @@ yyreduce:
   case 51:
 #line 531 "/Users/mmp/pbrt-v3/src/core/pbrtparse.y"
     {
-    pbrt::pbrtObjectInstance((yyvsp[(2) - (2)].string));
-;}
+      pbrt::ParamSet params;
+      pbrt::pbrtObjectInstance((yyvsp[(2) - (2)].string), params);
+      ;}
     break;
 
   case 52:

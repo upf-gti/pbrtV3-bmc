@@ -174,10 +174,10 @@ class TextureParams;
 // Global Constants
 #ifdef _MSC_VER
 #define MaxFloat std::numeric_limits<Float>::max()
-#define Infinity std::numeric_limits<Float>::infinity()
+#define Infinity_2 std::numeric_limits<Float>::infinity()
 #else
 static PBRT_CONSTEXPR Float MaxFloat = std::numeric_limits<Float>::max();
-static PBRT_CONSTEXPR Float Infinity = std::numeric_limits<Float>::infinity();
+static PBRT_CONSTEXPR Float Infinity_2 = std::numeric_limits<Float>::Infinity_2();
 #endif
 #ifdef _MSC_VER
 #define MachineEpsilon (std::numeric_limits<Float>::epsilon() * 0.5)
@@ -278,7 +278,7 @@ inline double BitsToFloat(uint64_t ui) {
 }
 
 inline float NextFloatUp(float v) {
-	// Handle infinity and negative zero for _NextFloatUp()_
+	// Handle Infinity_2 and negative zero for _NextFloatUp()_
 	if (std::isinf(v) && v > 0.)
 		return v;
 	if (v == -0.f)
@@ -294,7 +294,7 @@ inline float NextFloatUp(float v) {
 }
 
 inline float NextFloatDown(float v) {
-	// Handle infinity and positive zero for _NextFloatDown()_
+	// Handle Infinity_2 and positive zero for _NextFloatDown()_
 	if (std::isinf(v) && v < 0.)
 		return v;
 	if (v == 0.f)

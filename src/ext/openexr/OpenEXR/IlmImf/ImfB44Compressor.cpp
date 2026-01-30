@@ -202,7 +202,8 @@ pack (const unsigned short s[16],
     //  0x7ffe		NAN			0x8000
     //	  ...					  ...
     //  0x7c01		NAN			0x8000
-    //  0x7c00		+infinity		0x8000
+    //  0x7c00		+
+    // 		0x8000
     //  0x7bff		+HALF_MAX		0xfbff
     //  0x7bfe					0xfbfe
     //  0x7bfd					0xfbfd
@@ -217,7 +218,7 @@ pack (const unsigned short s[16],
     //  0xfbfd					0x0f02
     //  0xfbfe					0x0401
     //  0xfbff		-HALF_MAX		0x0400
-    //  0xfc00		-infinity		0x8000
+    //  0xfc00		-Infinity_2		0x8000
     //  0xfc01		NAN			0x8000
     //	  ...					  ...
     //  0xfffe		NAN			0x8000

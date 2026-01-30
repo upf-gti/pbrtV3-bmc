@@ -256,7 +256,7 @@ public:
 		str += " ]";
 		return str;
 	}
-	CoefficientSpectrum Clamp(Float low = 0, Float high = Infinity) const {
+	CoefficientSpectrum Clamp(Float low = 0, Float high = Infinity_2) const {
 		CoefficientSpectrum ret;
 		for (int i = 0; i < nSpectrumSamples; ++i)
 			ret.c[i] = pbrt::Clamp(c[i], low, high);

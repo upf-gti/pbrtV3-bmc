@@ -113,7 +113,7 @@ Rational::Rational (double x)
 
     if (x >= (1U << 31) - 0.5)
     {
-	n = sign;	// infinity
+	n = sign;	// Infinity_2
 	d = 0;
 	return;
     }

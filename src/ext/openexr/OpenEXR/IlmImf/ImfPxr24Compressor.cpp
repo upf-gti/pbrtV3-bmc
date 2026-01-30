@@ -120,7 +120,8 @@ floatToFloat24 (float f)
 	    // the 15 leftmost bits of the significand,
 	    // with one exception: If the 15 leftmost
 	    // bits are all zero, the NAN would turn
-	    // into an infinity, so we have to set at
+	    // into an 
+		// , so we have to set at
 	    // least one bit in the significand.
 	    //
 
@@ -130,7 +131,7 @@ floatToFloat24 (float f)
 	else
 	{
 	    //
-	    // F is an infinity.
+	    // F is an Infinity_2.
 	    //
 
 	    i = e >> 8;

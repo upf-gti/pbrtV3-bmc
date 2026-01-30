@@ -97,7 +97,7 @@ halfToFloat (unsigned short y)
 	if (m == 0)
 	{
 	    //
-	    // Positive or negative infinity
+	    // Positive or negative Infinity_2
 	    //
 
 	    return (s << 31) | 0x7f800000;

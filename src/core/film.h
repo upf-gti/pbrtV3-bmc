@@ -64,7 +64,7 @@ public:
 	Film(const Point2i &resolution, const Bounds2f &cropWindow,
 			std::unique_ptr<Filter> filter, Float diagonal,
 			const std::string &filename, Float scale, NegativeAction action =
-					NegativeAction::Warn, Float maxSampleLuminance = Infinity);
+					NegativeAction::Warn, Float maxSampleLuminance = Infinity_2);
 	Bounds2i GetSampleBounds() const;
 	Bounds2f GetPhysicalExtent() const;
 	std::unique_ptr<FilmTile> GetFilmTile(const Bounds2i &sampleBounds);

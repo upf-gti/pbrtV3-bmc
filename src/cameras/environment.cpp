@@ -48,7 +48,7 @@ Float EnvironmentCamera::GenerateRay(const CameraSample &sample,
     Float phi = 2 * Pi * sample.pFilm.x / film->fullResolution.x;
     Vector3f dir(std::sin(theta) * std::cos(phi), std::cos(theta),
                  std::sin(theta) * std::sin(phi));
-    *ray = Ray(Point3f(0, 0, 0), dir, Infinity,
+    *ray = Ray(Point3f(0, 0, 0), dir, Infinity_2,
                Lerp(sample.time, shutterOpen, shutterClose));
     ray->medium = medium;
 

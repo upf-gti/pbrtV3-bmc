@@ -952,7 +952,7 @@ YY_DECL {
 		case 1:YY_RULE_SETUP
 #line 127 "/Users/mmp/pbrt-v3/src/core/pbrtlex.ll"
 		{
-			BEGINCOMMENT;
+			BEGIN COMMENT;
 			if (pbrt::PbrtOptions.cat || pbrt::PbrtOptions.toPly)
 				printf("%*s#", pbrt::catIndentCount, "");
 		}
@@ -972,7 +972,7 @@ YY_DECL {
 			pbrt::line_num++;
 			if (pbrt::PbrtOptions.cat || pbrt::PbrtOptions.toPly)
 				putchar('\n');
-			BEGININITIAL;
+			BEGIN INITIAL;
 		}
 			YY_BREAK
 		case 4:YY_RULE_SETUP
@@ -1258,7 +1258,7 @@ YY_DECL {
 		case 50:YY_RULE_SETUP
 #line 187 "/Users/mmp/pbrt-v3/src/core/pbrtlex.ll"
 		{
-			BEGINSTR;
+			BEGIN STR;
 			pbrt::str_pos = 0;
 			yylval.string[0] = '\0';
 		}
@@ -1331,7 +1331,7 @@ YY_DECL {
 		case 61:YY_RULE_SETUP
 #line 205 "/Users/mmp/pbrt-v3/src/core/pbrtlex.ll"
 		{
-			BEGININITIAL;
+			BEGIN INITIAL;
 			return STRING;
 		}
 			YY_BREAK

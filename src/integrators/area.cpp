@@ -1,36 +1,4 @@
 
-/*
-    pbrt source code is Copyright(c) 1998-2016
-                        Matt Pharr, Greg Humphreys, and Wenzel Jakob.
-
-    This file is part of pbrt.
-
-    Redistribution and use in source and binary forms, with or without
-    modification, are permitted provided that the following conditions are
-    met:
-
-    - Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-
-    - Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
-    IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
-    TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
-    PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-    HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-    LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
- */
-
-
 #include "integrators/area.h"
 #include "interaction.h"
 #include "camera.h"
@@ -38,17 +6,19 @@
 #include "paramset.h"
 #include "lights/diffuse.h"
 
-// GTI
-
+// AreaIntegrator CMC implementation
 namespace pbrt {
 
+// Struct to be consistent with BMC implementation
 struct sSamplingParams_area {
     Vector3f corner;
     Vector3f diagonal;
 };
 
+// Function to generate random point on area light source
 inline Vector3f random_on_area(const void *data) {
-    const sSamplingParams_area *params = static_cast<const sSamplingParams_area *>(data);
+    const sSamplingParams_area *params =
+        static_cast<const sSamplingParams_area *>(data);
     Vector3f corner = params->corner;
     Vector3f diagonal = params->diagonal;
 
@@ -59,8 +29,7 @@ inline Vector3f random_on_area(const void *data) {
                     corner.z + r2 * diagonal.z);
 }
 
-
-// AreaIntegrator Method Definitions
+// AreaIntegrator Method
 Spectrum AreaIntegrator::Li(const RayDifferential &ray, const Scene &scene,
                                Sampler &sampler, MemoryArena &arena,
                                int depth) const {
@@ -69,59 +38,62 @@ Spectrum AreaIntegrator::Li(const RayDifferential &ray, const Scene &scene,
     if (!scene.Intersect(ray, &isect)) {
         return Spectrum(0.0);
     }
-    Spectrum L(0.0);
-    std::shared_ptr<Light> light = scene.lights[0];
 
-    if (!light->CanIlluminate(isect)) {
-        return Spectrum(0.0);
-    }
-    
-    // Initialize common variables for Direct integrator
+    isect.ComputeScatteringFunctions(ray, arena);
+
     Vector3f wo = isect.wo;
     Spectrum Le = isect.Le(wo);
-    isect.ComputeScatteringFunctions(ray, arena);
-    //if (!isect.bsdf) return Le;
-    if (Le.MaxComponentValue() > 0.0) return Le;
+    
+    // Check if light can illuminate the intersection point
+    std::shared_ptr<Light> light = scene.lights[0];
+    if (!light->CanIlluminate(isect)) {
+        return Le;
+    }
 
     // Initialize common variables for Area integrator
+    // Light parameters
     auto *area_light = dynamic_cast<const DiffuseAreaLight *>(light.get());
     
     Vector3f wi;
     Float pdf;
     VisibilityTester visibility;
-    Le = light->Sample_Li(isect, sampler.Get2D(), &wi, &pdf, &visibility);
+    Le = area_light->Sample_Li(isect, sampler.Get2D(), &wi, &pdf, &visibility);
     Normal3f light_normal = visibility.P1().n;
     
+    // Sampling parameters for area light
     Bounds3f bounds = area_light->shape->WorldBound();
-    sSamplingParams_area *samplingParams = new sSamplingParams_area();
-    samplingParams->corner =
-        Vector3f(bounds.pMin.x, bounds.pMin.y, bounds.pMin.z);
-    samplingParams->diagonal =
-        Vector3f(bounds.pMax.x - bounds.pMin.x, bounds.pMax.y - bounds.pMin.y,
-                 bounds.pMax.z - bounds.pMin.z);
-
-    Float area = area_light->area;
-
-    Float pdf_area = 1.0 / area;
+    sSamplingParams_area *samplingParams = new sSamplingParams_area(); // Using this struct to be consistent with BMC
+    samplingParams->corner = Vector3f(bounds.pMin.x, bounds.pMin.y, bounds.pMin.z);
+    samplingParams->diagonal = Vector3f(bounds.pMax.x - bounds.pMin.x,
+                                        bounds.pMax.y - bounds.pMin.y,
+                                        bounds.pMax.z - bounds.pMin.z);
+            
+    // Other variables for the Monte Carlo integration
+    Float pdf_area = 1.0 / area_light->area;
     Point3f x = isect.p;
+    Spectrum L(0.0);
+
+    // Monte Carlo integration over the area light source
     for (int i = 0; i < num_shading_samples; ++i) {
 
+        // Sample random point on area light and compute wi
         Vector3f random_point = random_on_area(samplingParams);
         Vector3f vector_to_light = random_point - Vector3f(x.x, x.y, x.z);
-        Vector3f wi = Normalize(vector_to_light);
+        wi = Normalize(vector_to_light);
+
+        // Visibility check, if unoccluded, accumulate contribution
         Ray nextRay = isect.SpawnRay(wi);
-        nextRay.tMax = vector_to_light.Length() - 1e-4;
+        nextRay.tMax = vector_to_light.Length() - 1e-4;      
+        if (scene.IntersectP(nextRay)) continue;
+        
+        // Compute BRDF and geometry term
+        Spectrum BRDF = isect.bsdf->f(wo, wi);
+        Float G_term = Dot(wi, isect.shading.n) * Dot(-wi, light_normal) / vector_to_light.LengthSquared();
 
-        if (!scene.IntersectP(nextRay)) {
-            Spectrum f = isect.bsdf->f(wo, wi) * Dot(wi, isect.shading.n);
-            Float geo = Dot(-wi, light_normal) / vector_to_light.LengthSquared();
-
-            L += Le * f * geo / pdf_area;
-        }
-
+        L += Le * BRDF * G_term;
     }
         
-    L /= num_shading_samples;
+    L /= (num_shading_samples * pdf_area);
         
     return L;
 }
@@ -145,7 +117,7 @@ AreaIntegrator *CreateAreaIntegrator(
         }
     }
 
-    printf("\nExecuting Area Integrator\n");
+    printf("\nExecuting Area CMC Integrator\n");
 
     return new AreaIntegrator(numSamples, camera, sampler, pixelBounds);
 }

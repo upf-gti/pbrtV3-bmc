@@ -62,9 +62,10 @@
 #include "integrators/unipath.h"
 #include "integrators/volpath.h"
 #include "integrators/whitted.h"
+#include "integrators/direct.h"
+#include "integrators/direct_bmc.h"
 #include "integrators/area.h"
 #include "integrators/area_bmc.h"
-#include "integrators/area_line.h"
 #include "lights/diffuse.h"
 #include "lights/distant.h"
 #include "lights/goniometric.h"
@@ -1835,17 +1836,21 @@ Integrator *RenderOptions::MakeIntegrator() const {
 	} else if (IntegratorName == "ambientocclusion") {
 		integrator = CreateAOIntegrator(IntegratorParams, sampler, camera);
 
-    // Area CMC implementation
+	// Hemisphere CMC implementation
+    } else if (IntegratorName == "direct") {
+        integrator = CreateDirectIntegrator(IntegratorParams, sampler, camera);
+
+	// Hemisphere BMC implementation
+    } else if (IntegratorName == "directbmc") {
+        integrator = CreateDirectBMCIntegrator(IntegratorParams, sampler, camera);
+		
+		// Area CMC implementation
     } else if (IntegratorName == "area") {
         integrator = CreateAreaIntegrator(IntegratorParams, sampler, camera);
 
     // Area CMC implementation
     } else if (IntegratorName == "areabmc") {
         integrator = CreateAreaBMCIntegrator(IntegratorParams, sampler, camera);
-
-	// Area CMC implementation
-    } else if (IntegratorName == "arealine") {
-        integrator = CreateAreaLineIntegrator(IntegratorParams, sampler, camera);
 		
 	// [Billen and Dutré '16] implementation
 	} else if (IntegratorName == "line") {

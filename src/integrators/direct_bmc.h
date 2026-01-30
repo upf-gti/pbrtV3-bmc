@@ -4,30 +4,30 @@
 #pragma once
 #endif
 
-#ifndef PBRT_INTEGRATORS_AREA_BMC_H
-#define PBRT_INTEGRATORS_AREA_BMC_H
+#ifndef PBRT_INTEGRATORS_DIRECT_BMC_H
+#define PBRT_INTEGRATORS_DIRECT_BMC_H
 
 #include "pbrt.h"
 #include "integrator.h"
 #include "scene.h"
-#include "bmc.h"
+#include "../GPRender/src/bmc.h"
 
 namespace pbrt {
 
-class AreaBMCIntegrator : public SamplerIntegrator {
+class DirectBMCIntegrator : public SamplerIntegrator {
     public:
-        AreaBMCIntegrator(int numSamples, int numBMC,
+        DirectBMCIntegrator(int numSamples, int numBMC,
                         std::vector<BMC<Vector3f, Spectrum> *> bmcList,
                         std::shared_ptr<const Camera> camera,
                       std::shared_ptr<Sampler> sampler,
                       const Bounds2i &pixelBounds)
           : SamplerIntegrator(camera, sampler, pixelBounds),
-            num_shading_samples(numSamples),
-            num_bmcs(numBMC), bmc_list(bmcList) {}
+            num_shading_samples(numSamples), num_bmcs(numBMC), bmc_list(bmcList) {}
         
         Spectrum Li(const RayDifferential &ray, const Scene &scene,
                 Sampler &sampler, MemoryArena &arena, int depth) const;
         void Preprocess(const Scene &scene, Sampler &sampler);
+
                 
     private:
         uint32_t num_shading_samples;
@@ -35,10 +35,10 @@ class AreaBMCIntegrator : public SamplerIntegrator {
         uint32_t num_bmcs;
 };
 
-AreaBMCIntegrator *CreateAreaBMCIntegrator(
+DirectBMCIntegrator* CreateDirectBMCIntegrator(
     const ParamSet &params, std::shared_ptr<Sampler> sampler,
     std::shared_ptr<const Camera> camera);
 
 }  // namespace pbrt
 
-#endif  // PBRT_INTEGRATORS_AREA_BMC_H
+#endif  // PBRT_INTEGRATORS_DIRECT_H

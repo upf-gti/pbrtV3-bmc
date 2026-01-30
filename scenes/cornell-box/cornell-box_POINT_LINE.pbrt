@@ -1,12 +1,9 @@
 # Adapted from Cornell Box scene in https://benedikt-bitterli.me/resources/
 
-Integrator "area" "integer numsamples" [ 32768 ] # Points
-#Integrator "line" "string method" [ "linecount" ] "string strategy" [ "fixeddirection" ] # Lines
-#Integrator "pointline" "integer maxdepth" [ 1 ] "string method" [ "linecount" ] "string strategy1" [ "line-surf-area" ] "float angle1" [ 0.0 ] "string strategy2" [ "line-surf-area" ] "float angle2" [ 0.5 ] # Points & lines
-
+Integrator "pointline" "integer maxdepth" [ 1 ] "string method" [ "render" ] "string strategy1" [ "line-surf-area" ] "float angle1" [ 0.0 ] "string strategy2" [ "line-surf-area" ] "float angle2" [ 0.5 ]
 Transform [ 1 -0 -0 -0 -0 1 -0 -0 -0 -0 -1 -0 -0 -1 6.8 1]
 
-Sampler "random" "integer pixelsamples" [ 1024 ]
+Sampler "random" "integer pixelsamples" [ 256 ]
 PixelFilter "box" "float xwidth" [ 0.5 ] "float ywidth" [ 0.5 ] 
 Film "image" "integer xresolution" [ 512 ] "integer yresolution" [ 512 ] "string filename" [ "scenes/cornell-box/output.exr" ]
 Camera "perspective" "float fov" [ 19.500000 ]
